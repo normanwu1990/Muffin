@@ -22,37 +22,22 @@ public class Solution {
      */
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        if(root==null){
-            return ans;
-        }
         helper(root,ans);
         return ans;
     }
     
     public int helper(TreeNode t, List<List<Integer>> ans){
-        List<Integer> toAdd ;
-        if(isLeaf(t)){
-            if(ans.size()==0){
-                toAdd = new LinkedList<Integer>();
-                toAdd.add(t.val);
-                ans.add(toAdd);
-            }
-            else{
-                ans.get(0).add(t.val);
-            }
-            
+        if(t==null){
             return 0;
         }
         else{
+            List<Integer> toAdd ;
             int levelRet = 0;
             int leftLevel = 0;
             int rightLevel = 0;
-            if(t.left!=null){
-                leftLevel = helper(t.left,ans)+1;
-            }
-            if(t.right!=null){
-                rightLevel = helper(t.right,ans)+1;
-            }
+            leftLevel = helper(t.left,ans);
+            rightLevel = helper(t.right,ans);
+
             levelRet = Math.max(leftLevel,rightLevel);
             if(ans.size()==levelRet){
                 toAdd = new LinkedList<Integer>();
@@ -62,7 +47,7 @@ public class Solution {
             else{
                 ans.get(levelRet).add(t.val);
             }
-            return levelRet;
+            return levelRet+1;
         }
     }
 }
