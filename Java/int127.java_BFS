@@ -1,0 +1,49 @@
+/**
+ * Definition for Directed graph.
+ * class DirectedGraphNode {
+ *     int label;
+ *     ArrayList<DirectedGraphNode> neighbors;
+ *     DirectedGraphNode(int x) { label = x; neighbors = new ArrayList<DirectedGraphNode>(); }
+ * };
+ */
+
+public class Solution {
+    /*
+     * @param graph: A list of Directed graph node
+     * @return: Any topological order for the given graph.
+     */
+    public ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
+        int[] incomingEdges = new int[graph.size()];
+        // compute the number of incoming edges
+        for(DirectedGraphNode node:graph){
+            for(DirectedGraphNode neighbor: node.neighbors){
+                incomingEdges[neighbor.label]++;
+            }
+        }
+   //     System.out.println("Part 1 complete");
+        
+        // put starting points into the q
+        Queue<DirectedGraphNode> q = new LinkedList<DirectedGraphNode>();
+        for(int i=0;i<incomingEdges.length;i++){
+            if(incomingEdges[i]==0){
+                q.add(graph.get(i));
+            }
+        }
+   //     System.out.println("Part 2 complete");
+        
+        ArrayList<DirectedGraphNode> ans = new ArrayList<DirectedGraphNode>();
+        // go through the queue and push next round of the frontier in
+        while(!q.isEmpty()){
+            DirectedGraphNode curr = q.remove();
+            ans.add(curr);
+            for(DirectedGraphNode currNeighbor:curr.neighbors){
+                if(--incomingEdges[currNeighbor.label]==0){
+                    q.add(currNeighbor);
+                }
+            }
+        }
+        
+        
+        return ans;
+    }
+}
