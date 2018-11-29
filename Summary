@@ -1,0 +1,4 @@
+1.  a. new int{ 2, 3 }
+    b. int[]  -> length
+    c. Map<Integer, Integer> m = new HashMap<>();
+
